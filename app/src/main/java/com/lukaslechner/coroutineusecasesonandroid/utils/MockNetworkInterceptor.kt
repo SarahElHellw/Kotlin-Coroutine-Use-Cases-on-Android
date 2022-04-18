@@ -2,6 +2,7 @@ package com.lukaslechner.coroutineusecasesonandroid.utils
 
 import com.google.gson.Gson
 import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaType
 
 class MockNetworkInterceptor : Interceptor {
 
@@ -24,7 +25,7 @@ class MockNetworkInterceptor : Interceptor {
 
     private fun findMockResponseInList(request: Request): MockResponse? {
         return mockResponses.find { mockResponse ->
-            mockResponse.path == request.url().toString()
+            mockResponse.path == request.url.toString()
         }
     }
 
@@ -46,7 +47,7 @@ class MockNetworkInterceptor : Interceptor {
             .message("Internal Server Error")
             .body(
                 ResponseBody.create(
-                    MediaType.get("application/json"),
+                    "application/json".toMediaType(),
                     gson.toJson(mapOf("cause" to "not sure"))
                 )
             )
@@ -64,7 +65,7 @@ class MockNetworkInterceptor : Interceptor {
             .message("OK")
             .body(
                 ResponseBody.create(
-                    MediaType.get("application/json"),
+                    "application/json".toMediaType(),
                     mockResponse.body
                 )
             )
