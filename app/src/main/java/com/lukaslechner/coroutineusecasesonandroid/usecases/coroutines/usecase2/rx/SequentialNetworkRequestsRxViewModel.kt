@@ -15,6 +15,8 @@ class SequentialNetworkRequestsRxViewModel(
 
     fun perform2SequentialNetworkRequest() {
         uiState.value = UiState.Loading
+        //The below code contains a lot of unconventional constructs
+        // that are specific to reactive programming using RxJava
         mockApi.getRecentAndroidVersions()
             .flatMap { androidVersions ->
                 val recentVersion = androidVersions.last()

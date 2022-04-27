@@ -43,8 +43,9 @@ class TimeoutAndRetryCallbackViewModel(api: CallbackMockApi = mockApi()) :
     fun performNetworkRequest() {
         uiState.value = UiState.Loading
 
-        getOreoFeatures()
-        getPieFeatures()
+        //two parallel network requests using retrofit calls
+        getOreoFeatures() // function gwaha call.enqueue() w by3ml override lel onResponse() wel onFailure()
+        getPieFeatures() // function gwaha call.enqueue() w by3ml override lel onResponse() wel onFailure()
     }
 
     private fun getOreoFeatures() {
@@ -85,6 +86,11 @@ class TimeoutAndRetryCallbackViewModel(api: CallbackMockApi = mockApi()) :
             }
         }
         Timber.d("start oreo Features Timeout Handler")
+        /**
+         * handler.postDelayed
+         * is used to execute code after a specific time in milliseconds
+         * so retryRunnable will be executed after 1 sec. = 1000
+         */
         oreoFeaturesTimeoutHandler.postDelayed(retryRunnable, timeout)
     }
 

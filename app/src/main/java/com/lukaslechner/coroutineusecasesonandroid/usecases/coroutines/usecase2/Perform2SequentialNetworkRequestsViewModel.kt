@@ -28,7 +28,15 @@ class Perform2SequentialNetworkRequestsViewModel(
          * Coroutines gives us both, the simplicity of conventional synchronous code together with the power
          * of asynchronous programming
          */
-        viewModelScope.launch{
+        viewModelScope.launch{ //This line launches a new coroutine
+
+            // This an ordinary imperative code that is
+            // executed sequentially from top to bottom
+
+            //for adding another sequential call -> just add another call to another suspend fn
+            //for making parallel calls -> use async coroutine builder
+            //for retry behavior -> use high order functions
+
             // (alt + ctrl + t) for try/catch shortcut
             try {
                 /*
