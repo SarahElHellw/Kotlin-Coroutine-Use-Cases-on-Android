@@ -5,6 +5,7 @@ import com.lukaslechner.coroutineusecasesonandroid.base.BaseViewModel
 import com.lukaslechner.coroutineusecasesonandroid.mock.MockApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class PerformSingleNetworkRequestViewModel(
     private val mockApi: MockApi = mockApi()
@@ -20,8 +21,15 @@ class PerformSingleNetworkRequestViewModel(
         // viewModel gets cleared
 //        viewModelScope.launch(Dispatchers.IO) -> LiveData throws exception Cannot invoke setValue on a background thread
         viewModelScope.launch{
-            val recentVersions = mockApi.getRecentAndroidVersions()
-            uiState.value = UiState.Success(recentVersions)
+            //How to catch exceptions that aris from calling Retrofit suspend functions?
+            //use try/catch block
+            try {
+                val recentVersions = mockApi.getRecentAndroidVersions()
+                uiState.value = UiState.Success(recentVersions)
+            }catch (e: Exception){
+                Timber.e(e)
+                uiState.value = UiState.Error("Network Request failed!")
+            }
         }
     }
 }
