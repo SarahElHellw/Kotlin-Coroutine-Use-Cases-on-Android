@@ -18,9 +18,12 @@ class PerformNetworkRequestsConcurrentlyViewModel(
                 //by calling 3 suspended functions sequentially in each call
                 //the coroutine gets suspended until the completion of the suspend function
                 //and then the coroutine resumes and executes the next suspend function and so on
-                val oreoFeatures = mockApi.getAndroidVersionFeatures(27)
-                val pieFeatures = mockApi.getAndroidVersionFeatures(28)
-                val android10Features = mockApi.getAndroidVersionFeatures(29)
+                val oreoFeatures =
+                    mockApi.getAndroidVersionFeatures(27) //coroutine will get suspended util the response is returned
+                val pieFeatures =
+                    mockApi.getAndroidVersionFeatures(28)//coroutine will get suspended util the response is returned
+                val android10Features =
+                    mockApi.getAndroidVersionFeatures(29)//coroutine will get suspended util the response is returned
                 val versionFeatures = listOf(oreoFeatures, pieFeatures, android10Features)
                 uiState.value = UiState.Success(versionFeatures)
             } catch (exception: Exception) {
